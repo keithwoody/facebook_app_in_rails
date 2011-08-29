@@ -22,5 +22,7 @@ FacebookApp::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  FACEBOOK_APP_ID = '126272077470869'
 end
 
