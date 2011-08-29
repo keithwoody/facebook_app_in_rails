@@ -1,5 +1,6 @@
 FacebookApp::Application.routes.draw do
   match "facebook" => 'facebook#index'
+  match "facebook/channel.html" => 'facebook#channel', :as => :facebook_channel
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
