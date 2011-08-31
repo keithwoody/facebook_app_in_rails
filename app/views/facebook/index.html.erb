@@ -1,8 +1,40 @@
+<%= content_for :js do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+
+    var fb_authed = function(response){
+      var ninja_url = $('#ninja').attr('href') +
+                       '?' +
+                       'fb_user_id=' +
+                       response.authResponse.userID ;
+      alert( ninja_url );
+    };
+    // capture clicks to the special link/content
+    $('#ninja').click(function(){
+        //check if user is logged into the FB app and act on the response
+        FB.getLoginStatus(function( response ){
+          //if logged in and connected, retrieve user ID
+          if( response.authResponse ) { fb_authed(response); }
+          //otherwise, ask them to log in
+          else {
+            FB.login(function(response){
+              if( response.authResponse ) { fb_authed(response); }
+              else { alert("Authorize our app for awesome times"); }
+            });
+          }
+        });
+        return false; //don't follow the link
+      });
+    });
+  <% end %>
+<% end %>
+
 <h1>Vampire Shark Werewolf Ninjas!!</h1>
 <p>Are totally from the moon - i.e. Space Ninjas</p>
 
 <%- if user_likes_page? -%>
   <p>but you probably already knew that.</p>
+  <p>We let fans click this <%= link_to 'special ninja link', '#', :id =>'ninja' %></p>
 <%- else -%>
   <p>Not a fan, eh? If you like us, you'll be exempt from the coming takeover. Your call.</p>
 <%- end -%>
